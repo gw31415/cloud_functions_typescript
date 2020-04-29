@@ -2,13 +2,15 @@ name: Deploy to Cloud Functions
 
 on:
   push:
-    paths-ignore:
-    - '.github/deploy_to_cloud_functions.yml'
     branches: [ master ]
+    paths:
+    - '**.ts'
+    - '**.json'
   pull_request:
-    paths-ignore:
-    - '.github/deploy_to_cloud_functions.yml'
     branches: [ master ]
+    paths:
+    - '**.ts'
+    - '**.json'
 
 jobs:
   build:
