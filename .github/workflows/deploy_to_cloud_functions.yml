@@ -6,6 +6,8 @@ on:
     - '.github/deploy_to_cloud_functions.yml'
     branches: [ master ]
   pull_request:
+    paths-ignore:
+    - '.github/deploy_to_cloud_functions.yml'
     branches: [ master ]
 
 jobs:
