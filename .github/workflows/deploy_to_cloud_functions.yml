@@ -1,0 +1,35 @@
+name: Deploy to Cloud Functions
+
+on:
+  push:
+    paths-ignore:
+    - '.github/deploy_to_cloud_functions.yml'
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn install
+    - run: yarn gen
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '285.0.0'
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+    - env:
+        F_NAME: ${{ secrets.FUNCTION_NAME }}
+        F_REGION: ${{ secrets.FUNCTION_REGION }}
+      run: gcloud functions deploy $F_NAME --region $F_REGION

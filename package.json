@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc; functions-framework --target=shell",
+    "gen": "tsc"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.4.0",
+    "typescript": "^3.7.5"
+  }
+}
